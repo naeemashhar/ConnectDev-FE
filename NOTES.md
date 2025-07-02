@@ -1,0 +1,2 @@
+ - Connect.Dev-FE
+ -daisyUI => component library for tailwind css
