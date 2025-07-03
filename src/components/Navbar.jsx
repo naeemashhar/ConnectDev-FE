@@ -7,9 +7,9 @@ const Navbar = () => {
           <span className="text-2xl font-mono text-cyan-500">
             &lt;&#9679;&gt;
           </span>
-          <span className="ml-2 text-2xl font-semibold text-white">
+          <a href="/" className="ml-2 text-2xl font-semibold text-white">
             Connect.<span className="text-cyan-500">dev</span>
-          </span>
+          </a>
         </div>
 
         {/* Nav Links */}
@@ -75,7 +75,7 @@ const Navbar = () => {
                 <a href="/settings">Request</a>
               </li>
                <li>
-                <a href="/settings">Premium</a>
+                <a href="/premium">Premium</a>
               </li>
               <li>
                 <a href="/logout">Logout</a>
