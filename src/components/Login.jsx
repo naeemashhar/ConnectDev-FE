@@ -2,15 +2,20 @@ import axios from "axios";
 import React, { useState } from "react";
 
 const Login = () => {
-  const [emailId, setEmailId] = useState("ashhar@gmail.com");
-  const [password, setPassword] = useState("Naeem@123");
+  const [emailId, setEmailId] = useState("maxi@gmail.com");
+  const [password, setPassword] = useState("Maxi@123");
 
-  const handelLoginClick = async () => {
+  const handelLoginClick = async (e) => {
+    e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/login", {
-        emailId,
-        password,
-      });
+      const res = await axios.post(
+        "http://localhost:3000/login",
+        {
+          emailId,
+          password,
+        },
+        { withCredentials: true }
+      );
     } catch (error) {
       console.error(error);
     }
@@ -81,7 +86,6 @@ const Login = () => {
           </div>
 
           <button
-            type="submit"
             className="cursor-pointer w-full py-2.5 px-4 bg-gray-800 text-white text-sm font-semibold rounded-lg shadow-sm hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 transition-all"
             onClick={handelLoginClick}
           >
