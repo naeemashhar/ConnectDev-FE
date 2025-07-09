@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const loggedInUser = useSelector((store) => store.user);
@@ -10,9 +11,9 @@ const Navbar = () => {
         <span className="text-2xl font-mono text-cyan-500">
           &lt;&#9679;&gt;
         </span>
-        <a href="/" className="ml-2 text-2xl font-semibold text-white">
+        <Link to="/" className="ml-2 text-2xl font-semibold text-white">
           Connect.<span className="text-cyan-500">dev</span>
-        </a>
+        </Link>
       </div>
 
       {/* Nav Links */}
@@ -74,16 +75,16 @@ const Navbar = () => {
               className=" p-2 shadow menu menu-md dropdown-content bg-base-200 rounded-box w-40"
             >
               <li>
-                <a href="/profile">Profile</a>
+                <Link to="/profile">Profile</Link>
               </li>
               <li>
-                <a href="/settings">Request</a>
+                <Link to="/settings">Request</Link>
               </li>
               <li>
-                <a href="/premium">Premium</a>
+                <Link to="/premium">Premium</Link>
               </li>
               <li>
-                <a href="/logout">Logout</a>
+                <Link to="/logout">Logout</Link>
               </li>
             </ul>
           </div>
