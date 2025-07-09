@@ -18,6 +18,23 @@ const UserCard = ({ user }) => {
     country,
   } = user;
 
+  const skillOptions = [
+    { name: "ReactJs", logo: "/physics.png" },
+    { name: "NodeJs", logo: "/nodejs.png" },
+    { name: "MongoDB", logo: "/database-management.png" },
+    { name: "HTML", logo: "/html.png" },
+    { name: "CSS", logo: "/css-3.png" },
+    { name: "JavaScript", logo: "/js.png" },
+    { name: "Python", logo: "/python.png" },
+    { name: "TailwindCss", logo: "/css.png" },
+    { name: "Express", logo: "/expressjs-icon.svg" },
+    { name: "TypeScript", logo: "/typescript.png" },
+    { name: "Java", logo: "/java.png" },
+    { name: "C++", logo: "/c-.png" },
+    { name: "C#", logo: "/c-sharp.png" },
+    { name: "PHP", logo: "/php.png" },
+  ];
+
   // Compute rotation + border color based on hoverAction
   const cardStateClass =
     hoverAction === "interested"
@@ -27,7 +44,12 @@ const UserCard = ({ user }) => {
       : "rotate-0 border-cyan-500";
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-transparent">
+    <div
+      className="flex items-center justify-center min-h-screen bg-transparent"
+      style={{
+        backgroundImage: "url('/bg-login.png')",
+      }}
+    >
       <div
         className={`max-w-md h-[75vh] w-full bg-transparent backdrop-blur-xl px-6 py-13 rounded-3xl shadow-xl text-center transition-all duration-500 ease-in-out border ${cardStateClass}`}
       >
@@ -70,16 +92,26 @@ const UserCard = ({ user }) => {
         </p>
 
         {/* Skills */}
-        {skills?.length > 0 && (
+        {Array.isArray(skills) && skills.length > 0 && (
           <div className="mt-6 flex flex-wrap justify-center gap-2">
-            {skills.map((skill, i) => (
-              <span
-                key={i}
-                className="px-3 py-1 text-xs font-mono text-cyan-300 border border-cyan-500/40 rounded-full bg-cyan-500/10 shadow-md hover:bg-cyan-500/20 transition"
-              >
-                &lt;{skill}&gt;
-              </span>
-            ))}
+            {skills.map((skill, i) => {
+              const matchedSkill = skillOptions.find((s) => s.name === skill);
+              return (
+                <span
+                  key={i}
+                  className="flex items-center gap-2 px-3 py-1 text-xs font-mono text-cyan-300 border border-cyan-500/40 rounded-full bg-cyan-500/10 shadow-md hover:bg-cyan-500/20 transition"
+                >
+                  {matchedSkill?.logo && (
+                    <img
+                      src={matchedSkill.logo}
+                      alt={skill}
+                      className="w-4 h-4 rounded-sm"
+                    />
+                  )}
+                  &lt;{skill}&gt;
+                </span>
+              );
+            })}
           </div>
         )}
 
