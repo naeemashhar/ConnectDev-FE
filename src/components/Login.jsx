@@ -11,6 +11,8 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [error, setError] = useState("");
+
 
   const handelLoginClick = async (e) => {
     e.preventDefault();
@@ -28,6 +30,7 @@ const Login = () => {
       return navigate("/feed");
 
     } catch (error) {
+      setError(error?.response?.data || "Something went wrong :(");
       console.error(error);
     }
   };
@@ -96,6 +99,7 @@ const Login = () => {
             />
           </div>
 
+          <p className="text-sm text-red-500">{error}</p>
           <button
             className="cursor-pointer w-full py-2.5 px-4 bg-gray-800 text-white text-sm font-semibold rounded-lg shadow-sm hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 transition-all"
             onClick={handelLoginClick}
