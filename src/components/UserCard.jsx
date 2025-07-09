@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 const UserCard = ({ user }) => {
+  const [hoverAction, setHoverAction] = useState(null); // 'interested' | 'ignore' | null
+
   if (!user) return null;
 
   const {
@@ -14,25 +18,28 @@ const UserCard = ({ user }) => {
     country,
   } = user;
 
+  // Compute rotation + border color based on hoverAction
+  const cardStateClass =
+    hoverAction === "interested"
+      ? "rotate-[3deg] border-green-500"
+      : hoverAction === "ignore"
+      ? "-rotate-[3deg] border-red-500"
+      : "rotate-0 border-cyan-500";
+
   return (
-    <section
-      className="min-h-screen px-4 py-12 flex items-center justify-center"
-      style={{
-        backgroundImage: "url('/bg-login.png')",
-      }}
-    >
-      <div className="max-w-md h-[75vh] w-full  bg-transparent backdrop-blur-xl px-6 py-13 rounded-3xl shadow-xl text-center border border-cyan-500 transition-all duration-300 hover:scale-[1.01]">
-        
+    <div className="flex items-center justify-center min-h-screen bg-transparent">
+      <div
+        className={`max-w-md h-[75vh] w-full bg-transparent backdrop-blur-xl px-6 py-13 rounded-3xl shadow-xl text-center transition-all duration-500 ease-in-out border ${cardStateClass}`}
+      >
         {/* Profile Image */}
-        
-        <div className="w-50 h-50 mx-auto mb-4 transition-all duration-300 ease-in-out group">
+        <div className="w-40 h-40 mx-auto mb-4 transition-all duration-300 ease-in-out group">
           <img
-            src={photoURL}
+            src={photoURL || "/fallback.png"}
             alt={`${firstName} ${lastName}`}
             className="w-full h-full object-cover border-4 border-cyan-400 shadow-md
-               transition-all duration-300 ease-in-out
-               [clip-path:polygon(28%_0%,100%_0%,100%_78%,78%_100%,0%_100%,0%_28%)]
-               group-hover:clip-path-none  group-hover:rounded-full "
+              transition-all duration-300 ease-in-out
+              [clip-path:polygon(28%_0%,100%_0%,100%_78%,78%_100%,0%_100%,0%_28%)]
+              group-hover:clip-path-none group-hover:rounded-full"
           />
         </div>
 
@@ -40,7 +47,7 @@ const UserCard = ({ user }) => {
         <h2 className="text-2xl font-semibold tracking-tight text-white">
           {firstName} {lastName}
           <span className="text-sm text-cyan-400 font-light ml-2">
-            ({title})
+            ({title || "No Title"})
           </span>
         </h2>
 
@@ -57,12 +64,12 @@ const UserCard = ({ user }) => {
           </span>
         </div>
 
-        {/* About Section */}
+        {/* About */}
         <p className="mt-4 text-white/80 text-sm leading-relaxed px-2">
-          {about}
+          {about || "No bio available."}
         </p>
 
-        {/* Skills Tags */}
+        {/* Skills */}
         {skills?.length > 0 && (
           <div className="mt-6 flex flex-wrap justify-center gap-2">
             {skills.map((skill, i) => (
@@ -78,15 +85,23 @@ const UserCard = ({ user }) => {
 
         {/* Action Buttons */}
         <div className="mt-6 flex justify-center gap-4">
-          <button className="btn btn-sm btn-outline border-red-500 text-red-400 hover:bg-red-500/20 w-28">
+          <button
+            className="btn btn-sm btn-outline border-red-500 text-red-400 hover:bg-red-500/20 w-28"
+            onMouseEnter={() => setHoverAction("ignore")}
+            onMouseLeave={() => setHoverAction(null)}
+          >
             <i className="ri-close-line mr-1" /> Ignore
           </button>
-          <button className="btn btn-sm btn-outline border-green-500 text-green-400 hover:bg-green-500/20 w-28">
+          <button
+            className="btn btn-sm btn-outline border-green-500 text-green-400 hover:bg-green-500/20 w-28"
+            onMouseEnter={() => setHoverAction("interested")}
+            onMouseLeave={() => setHoverAction(null)}
+          >
             <i className="ri-heart-line mr-1" /> Interested
           </button>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
