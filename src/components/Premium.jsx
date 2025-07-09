@@ -1,7 +1,9 @@
 
 const Premium = () => {
   return (
-    <section className="py-20 text-white">
+    <section className="py-20 text-white" style={{
+        backgroundImage: "url('/main-bg.png')",
+      }}>
       <div className="max-w-5xl mx-auto px-6 text-center mb-12">
         <h2 className="text-4xl font-bold mb-4">
           Upgrade Your <span className="text-cyan-500">Connect.dev</span> Experience
