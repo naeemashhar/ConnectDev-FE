@@ -1,18 +1,37 @@
 import axios from "axios";
-import { BASE_URL } from "../utils/constants";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addRequests } from "../utils/requestSlice";
-import { useEffect } from "react";
+import { BASE_URL } from "../utils/constants";
+import { addRequests, removeRequest } from "../utils/requestSlice";
+import { toast } from "react-toastify";
 
 const Requests = () => {
   const requests = useSelector((store) => store.request);
   const dispatch = useDispatch();
+  const [loadingId, setLoadingId] = useState(null);
+
+  const reviewRequest = async (status, _id) => {
+    try {
+      setLoadingId(_id);
+      await axios.post(BASE_URL + "/request/review/" + status + "/" + _id, {}, {
+        withCredentials: true,
+      });
+
+      dispatch(removeRequest(_id));
+      toast.success(`Request ${status === "accepted" ? "accepted" : "rejected"}`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong. Try again.");
+    } finally {
+      setLoadingId(null);
+    }
+  };
+
   const fetchRequest = async () => {
     try {
       const res = await axios.get(BASE_URL + "/user/requests/received", {
         withCredentials: true,
       });
-
       dispatch(addRequests(res.data.data));
     } catch (error) {
       console.error(error);
@@ -32,15 +51,15 @@ const Requests = () => {
   }
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-[#020013] via-cyan-500/5 to-[#24243e] px-6 py-8 text-white">
+    <section className="min-h-screen bg-gradient-to-b from-[#020013] via-cyan-800/5 to-[#020013] px-6 py-8 text-white" >
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl font-semibold mb-6">
-          Your <span className="text-cyan-500">Requests</span>
+          Pending <span className="text-cyan-500">Requests.</span>
         </h2>
 
         {requests.length === 0 ? (
           <div className="bg-white/5 p-6 rounded-xl text-white/60 text-center border border-white/10">
-            You haven’t connected with anyone yet.
+            🎉 You're all caught up! No pending requests.
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
@@ -50,18 +69,18 @@ const Requests = () => {
               return (
                 <div
                   key={request._id}
-                  className="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-xl shadow-lg flex flex-col items-center text-center transition transform hover:scale-105 hover:shadow-xl duration-300"
+                  className="bg-black/20 backdrop-blur-xl backdrop-saturate-150 border border-white/10 p-4 rounded-xl shadow-md flex flex-col items-center text-center transition transform hover:scale-105 hover:shadow-xl duration-300"
+
                 >
                   <img
                     src={user.photoURL}
                     alt={user.firstName}
-                    className="object-cover w-25 h-25 rounded-full border-2 border-cyan-500 mb-4"
+                    className="object-cover w-24 h-24 rounded-full border-2 border-cyan-500 mb-4"
                   />
                   <h3 className="text-lg font-bold">
                     {user.firstName} {user.lastName}
                   </h3>
                   <p className="text-white/60 text-sm mb-2">{user.title}</p>
-
                   <p className="text-sm text-white/70 italic mb-4 px-2">
                     {user.about}
                   </p>
@@ -82,26 +101,22 @@ const Requests = () => {
                       </span>
                     )}
                   </div>
-
-                  {user.skills?.length > 0 && (
-                    <div className="flex flex-wrap gap-2 justify-center mb-4">
-                      {user.skills.slice(0, 5).map((skill, i) => (
-                        <span
-                          key={i}
-                          className="text-xs px-2 py-1 bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 rounded-full font-mono"
-                        >
-                          &lt;{skill}&gt;
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                 
 
                   <div className="flex justify-center gap-4 mt-2">
-                    <button className="btn btn-sm btn-outline border-green-500 text-green-400 hover:bg-green-500/20 transition">
+                    <button
+                      className="btn btn-sm btn-outline border-green-500 text-green-400 hover:bg-green-500/20 transition"
+                      onClick={() => reviewRequest("accepted", request._id)}
+                      disabled={loadingId === request._id}
+                    >
                       <i className="ri-user-add-line mr-1" />
                       Accept
                     </button>
-                    <button className="btn btn-sm btn-outline border-red-500 text-red-400 hover:bg-red-500/20 transition">
+                    <button
+                      className="btn btn-sm btn-outline border-red-500 text-red-400 hover:bg-red-500/20 transition"
+                      onClick={() => reviewRequest("rejected", request._id)}
+                      disabled={loadingId === request._id}
+                    >
                       <i className="ri-close-line mr-1" />
                       Reject
                     </button>

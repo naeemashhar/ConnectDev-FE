@@ -45,7 +45,12 @@ const Connections = () => {
   }
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-[#020013] via-cyan-500/5 to-[#24243e] px-6 py-8 text-white">
+    <section
+      className="min-h-screen bg-gradient-to-b from-[#020013] via-cyan-800/5 to-[#020013] px-6 py-8 text-white"
+      style={{
+        backgroundImage: "url('/main-bg.png')",
+      }}
+    >
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl font-semibold mb-6">
           Your <span className="text-cyan-500">Connections</span>
@@ -60,7 +65,7 @@ const Connections = () => {
             {connections.map((user) => (
               <div
                 key={user._id}
-                className="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-xl shadow-lg flex flex-col items-center text-center transition transform hover:scale-105 hover:shadow-xl duration-300"
+                className=" backdrop-blur-md border border-white/10 p-4 rounded-xl shadow-lg flex flex-col items-center text-center transition transform hover:scale-105 hover:shadow-xl duration-300"
               >
                 <img
                   src={user.photoURL}
@@ -107,7 +112,7 @@ const Connections = () => {
                       </span>
                     ))}
                   </div>
-                )}               
+                )}
 
                 <div className="flex justify-center gap-4 mt-2">
                   <button
