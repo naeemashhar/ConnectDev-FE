@@ -97,7 +97,7 @@ const Navbar = () => {
                 <Link to="/profile">Profile</Link>
               </li>
               <li>
-                <Link to="/settings">Request</Link>
+                <Link to="/requests">Request</Link>
               </li>
               <li>
                 <Link to="/premium">Premium</Link>

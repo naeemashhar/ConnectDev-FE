@@ -15,7 +15,6 @@ const skillOptions = [
   { name: "CSS", logo: "/css-3.png" },
   { name: "JavaScript", logo: "/js.png" },
   { name: "Python", logo: "/python.png" },
-  { name: "TailwindCss", logo: "/css.png" },
   { name: "Express", logo: "/expressjs-icon.svg" },
   { name: "TypeScript", logo: "/typescript.png" },
   { name: "Java", logo: "/java.png" },
