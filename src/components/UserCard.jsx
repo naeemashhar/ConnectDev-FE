@@ -1,11 +1,31 @@
 import { useState } from "react";
+import { BASE_URL } from "../utils/constants";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { removeUserFromFeed } from "../utils/feedSlice";
 
 const UserCard = ({ user }) => {
-  const [hoverAction, setHoverAction] = useState(null); // 'interested' | 'ignore' | null
+  const [hoverAction, setHoverAction] = useState(null); 
+
+  const dispatch = useDispatch();
+
+  const handelSendRequest = async (status, userId) => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/request/send/" + status + "/" + userId,
+        {},
+        { withCredentials: true }
+      );
+      dispatch(removeUserFromFeed(userId));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   if (!user) return null;
 
   const {
+    _id,
     firstName,
     lastName,
     photoURL,
@@ -120,6 +140,7 @@ const UserCard = ({ user }) => {
             className="btn btn-sm btn-outline border-red-500 text-red-400 hover:bg-red-500/20 w-28"
             onMouseEnter={() => setHoverAction("ignore")}
             onMouseLeave={() => setHoverAction(null)}
+            onClick={() => handelSendRequest("ignored", _id)}
           >
             <i className="ri-close-line mr-1" /> Ignore
           </button>
@@ -127,6 +148,7 @@ const UserCard = ({ user }) => {
             className="btn btn-sm btn-outline border-green-500 text-green-400 hover:bg-green-500/20 w-28"
             onMouseEnter={() => setHoverAction("interested")}
             onMouseLeave={() => setHoverAction(null)}
+            onClick={() => handelSendRequest("interested", _id)}
           >
             <i className="ri-heart-line mr-1" /> Interested
           </button>

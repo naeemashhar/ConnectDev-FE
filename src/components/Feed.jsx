@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import UserCard from "./UserCard";
 
 const Feed = () => {
-  const feed = useSelector((store) => store.feed);
+  const feed = useSelector((store) => store.feed?.users);
   const dispatch = useDispatch();
 
   const getFeed = async () => {
@@ -15,7 +15,8 @@ const Feed = () => {
       const res = await axios.get(BASE_URL + "/feed", {
         withCredentials: true,
       });
-      dispatch(addFeed(res.data));
+
+      dispatch(addFeed(res.data.users));
     } catch (error) {
       console.error(error);
     }
@@ -25,12 +26,21 @@ const Feed = () => {
     getFeed();
   }, []);
 
+  if (!feed) return <div className="text-white">Loading feed...</div>;
+
+  if (feed.length <= 0) {
+    return (
+      <div className="text-white text-center mt-10 text-lg">
+        You've reviewed all available profiles. New developers will appear as
+        they join.
+      </div>
+    );
+  }
+
   return (
-    feed && 
-    (<div>
-      <UserCard user ={feed.users[0]} />
-    </div>)
-    
+    <div>
+      <UserCard user={feed[0]} />
+    </div>
   );
 };
 

@@ -1,4 +1,3 @@
-import React from "react";
 
 const PreviewCard = ({ user }) => {
   if (!user) return null;
