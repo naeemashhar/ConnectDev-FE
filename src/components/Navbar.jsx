@@ -60,15 +60,15 @@ const Navbar = () => {
           </svg>
         </label>
 
-        <a className="btn btn-ghost text-lg" href="/explore">
+        <Link className="btn btn-ghost text-lg" to="/feed">
           Explore
-        </a>
-        <a className="btn btn-ghost text-lg" href="/connections">
+        </Link>
+        <Link className="btn btn-ghost text-lg" to="/connections">
           Connections
-        </a>
-        <a className="btn btn-ghost text-lg" href="/about">
+        </Link>
+        <Link className="btn btn-ghost text-lg" to="/about">
           About
-        </a>
+        </Link>
       </div>
 
       {/* Right Side */}

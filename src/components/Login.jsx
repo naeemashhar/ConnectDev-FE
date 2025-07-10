@@ -2,12 +2,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
-  const [emailId, setEmailId] = useState("ibrahim@gmail.com");
-  const [password, setPassword] = useState("Ibrahim@123");
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -53,7 +53,7 @@ const Login = () => {
         </div>
 
         <h2 className="my-10 text-center text-3xl font-bold text-white">
-          Log in to your account
+         <span className="text-cyan-500">Log in</span> to your account
         </h2>
 
         <form className="space-y-4 my-6">
@@ -126,9 +126,9 @@ const Login = () => {
 
         <p className="text-center text-md text-gray-600">
           Are you new here?{" "}
-          <a href="#" className="text-cyan-500 hover:underline">
+          <Link to="/signup" className="text-cyan-500 hover:underline">
             Create an account
-          </a>
+          </Link>
         </p>
       </div>
     </div>
