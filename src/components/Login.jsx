@@ -49,11 +49,11 @@ const Login = () => {
           <ArrowLeft className="w-4 h-4" />
           Back
         </button>
-        <div className="flex justify-center cursor-pointer">
-          <span className="text-xl font-mono text-cyan-500">
+        <div className="flex justify-center items-center cursor-pointer">
+          <span className="text-2xl font-mono text-cyan-500">
             &lt;&#9679;&gt;
           </span>
-          <span className="ml-2 text-xl font-semibold text-white">
+          <span className="ml-2 text-2xl font-semibold text-white">
             Connect.<span className="text-cyan-500">dev</span>
           </span>
         </div>
@@ -120,13 +120,15 @@ const Login = () => {
           <span className="border-b w-1/5 border-gray-300"></span>
         </div>
 
-        <div className="flex justify-center items-center space-x-4">
-          <button className="flex items-center justify-center w-[50%] h-10 px-4 py-2 rounded-md cursor-pointer border-2 border-gray-800 hover:bg-base-100 transition">
-            <i className="ri-google-fill mr-2 text-lg"></i>Log in with Google
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 w-full px-4">
+          <button className="flex items-center justify-center w-full sm:w-[50%] h-10 px-4 py-2 rounded-md cursor-pointer border-2 border-gray-800 hover:bg-base-100 transition text-sm sm:text-base">
+            <i className="ri-google-fill mr-2 text-lg"></i>
+            Log in with Google
           </button>
 
-          <button className="flex items-center justify-center w-[50%] h-10 px-4 py-2 rounded-md cursor-pointer border-2 border-gray-800 hover:bg-base-100 transition">
-            <i className="ri-github-fill mr-2 text-lg"></i>Log in with Github
+          <button className="flex items-center justify-center w-full sm:w-[50%] h-10 px-4 py-2 rounded-md cursor-pointer border-2 border-gray-800 hover:bg-base-100 transition text-sm sm:text-base">
+            <i className="ri-github-fill mr-2 text-lg"></i>
+            Log in with Github
           </button>
         </div>
 
