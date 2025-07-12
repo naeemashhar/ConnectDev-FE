@@ -9,7 +9,7 @@ const Premium = () => {
       }}>
         <button
           onClick={() => navigate(-1)}
-          className="cursor-pointer absolute top-20 left-13 px-4 py-2 text-md text-white rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
+          className="cursor-pointer absolute top-6 left-6 px-4 py-2 text-md text-white rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
         >
           <ArrowLeft className="w-4 h-4" />
           Back

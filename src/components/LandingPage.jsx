@@ -1,10 +1,48 @@
 import { Link } from "react-router-dom";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef } from "react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const LandingPage = () => {
+  const heroRef = useRef(null);
+  const featuresRef = useRef(null);
+  const howItWorksRef = useRef(null);
+  const ctaRef = useRef(null);
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+  const fadeIn = (element) => {
+    gsap.fromTo(
+      element,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: element,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  };
+
+  fadeIn(heroRef.current);
+  fadeIn(featuresRef.current);
+  fadeIn(howItWorksRef.current);
+  fadeIn(ctaRef.current);
+  
+}, []);
+
+
   return (
-    <div className="min-h-screen bg-[#020013] text-white">
+    <div ref={scrollRef} data-scroll-section className="min-h-screen bg-[#020013] text-white">
       {/* Navbar */}
-      <nav className=" flex justify-between items-center px-6 py-4 border-b border-white/10 bg-[#020013]/90 backdrop-blur">
+      <nav className="fixed top-0 left-0 z-50 right-0 flex justify-between items-center px-6 py-4 border-b border-white/10 bg-[#020013]/50 backdrop-blur">
         {/* Left: Logo */}
         <div className="flex-1 cursor-pointer">
           <span className="text-2xl font-mono text-cyan-500">
@@ -47,7 +85,7 @@ const LandingPage = () => {
 
           {/* Login Button */}
           <Link to="/login">
-            <button className="px-4 py-2 border border-cyan-400 text-cyan-400 rounded hover:bg-cyan-500 hover:text-black transition-all">
+            <button className="cursor-pointer px-4 py-2 border border-cyan-400 text-cyan-400 rounded hover:bg-cyan-500 hover:text-black transition-all">
               Login to your account
             </button>
           </Link>
@@ -55,7 +93,7 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="px-8 py-20 text-center max-w-3xl mx-auto">
+      <section ref={heroRef} data-scroll-section className="mt-10 px-8 py-20 text-center max-w-3xl mx-auto">
         <h2 className="text-4xl font-bold mb-6 leading-tight">
           Connect with Developers{" "}
           <span className="text-cyan-400">Worldwide 🌍</span>
@@ -76,7 +114,7 @@ const LandingPage = () => {
       </section>
 
       {/* Features Section */}
-      <section className="px-8 py-16 bg-[#0c0c1f]">
+      <section ref={featuresRef} data-scroll-section className="px-8 py-16 bg-[#0c0c1f]">
         <div className="max-w-6xl mx-auto text-center">
           <h3 className="text-2xl font-semibold mb-8 text-cyan-400">
             What you get
@@ -114,7 +152,7 @@ const LandingPage = () => {
       </section>
 
       {/* How It Works */}
-      <section className="px-8 py-20 text-center max-w-4xl mx-auto">
+      <section ref={howItWorksRef} className="px-8 py-20 text-center max-w-4xl mx-auto">
         <h3 className="text-2xl font-bold text-cyan-400 mb-6">How it works</h3>
         <ol className="text-white/90 space-y-4 list-decimal list-inside text-left">
           <li>
@@ -131,7 +169,7 @@ const LandingPage = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="px-8 py-20 bg-[#0e0e24] text-center">
+      <section  ref={ctaRef} className="px-8 py-20 bg-[#0e0e24] text-center">
         <h3 className="text-3xl font-bold mb-4 text-white">
           Ready to build your developer network?
         </h3>

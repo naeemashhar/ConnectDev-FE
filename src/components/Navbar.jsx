@@ -60,9 +60,6 @@ const Navbar = () => {
           </svg>
         </label>
 
-        <Link className="btn btn-ghost text-lg" to="/feed">
-          Explore
-        </Link>
         <Link className="btn btn-ghost text-lg" to="/connections">
           Connections
         </Link>

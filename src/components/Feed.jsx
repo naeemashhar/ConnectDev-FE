@@ -30,7 +30,7 @@ const Feed = () => {
 
   if (feed.length <= 0) {
     return (
-      <div className="text-white text-center mt-10 text-lg">
+      <div className="text-white text-center mt-10 text-2xl font-bold" >
         You've reviewed all available profiles. New developers will appear as
         they join.
       </div>

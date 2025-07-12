@@ -7,7 +7,7 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
-const PUBLIC_ROUTES = ["/", "/login", "/signup", "/about"];
+const PUBLIC_ROUTES = ["/", "/login", "/signup", "/about","/connections","/profile","/requests","/premium"];
 
 const Body = () => {
   const dispatch = useDispatch();
