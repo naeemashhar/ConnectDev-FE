@@ -3,6 +3,7 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ArrowLeft } from "lucide-react";
 
 const titleOptions = ["Student", "Fresher", "Professional"];
 const skillOptions = [
@@ -104,6 +105,13 @@ const SignUp = () => {
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-[#020013] via-gray-900/5 to-[#020013] px-4 py-12 flex justify-center">
+       <button
+          onClick={() => navigate(-1)}
+          className="cursor-pointer absolute top-4 left-4 px-4 py-2 text-md text-white rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </button>
       <form
         onSubmit={handleSubmit}
         className="max-w-2xl w-full rounded-lg shadow-lg p-8 space-y-6 bg-base-200 text-white"

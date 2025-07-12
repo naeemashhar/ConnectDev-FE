@@ -1,9 +1,19 @@
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Premium = () => {
+  const navigate = useNavigate();
   return (
     <section className="py-20 text-white" style={{
         backgroundImage: "url('/main-bg.png')",
       }}>
+        <button
+          onClick={() => navigate(-1)}
+          className="cursor-pointer absolute top-20 left-13 px-4 py-2 text-md text-white rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </button>
       <div className="max-w-5xl mx-auto px-6 text-center mb-12">
         <h2 className="text-4xl font-bold mb-4">
           Upgrade Your <span className="text-cyan-500">Connect.dev</span> Experience

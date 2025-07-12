@@ -4,11 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../utils/constants";
 import { addRequests, removeRequest } from "../utils/requestSlice";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 const Requests = () => {
   const requests = useSelector((store) => store.request);
   const dispatch = useDispatch();
   const [loadingId, setLoadingId] = useState(null);
+  const navigate = useNavigate();
 
   const reviewRequest = async (status, _id) => {
     try {
@@ -53,6 +56,13 @@ const Requests = () => {
   return (
     <section className="min-h-screen bg-gradient-to-b from-[#020013] via-cyan-800/5 to-[#020013] px-6 py-8 text-white" >
       <div className="max-w-6xl mx-auto">
+        <button
+          onClick={() => navigate(-1)}
+          className="cursor-pointer absolute top-20 left-13 px-4 py-2 text-md text-white rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </button>
         <h2 className="text-3xl font-semibold mb-6">
           Pending <span className="text-cyan-500">Requests.</span>
         </h2>

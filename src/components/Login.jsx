@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
+import { ArrowLeft } from "lucide-react";
 
 const Login = () => {
   const [emailId, setEmailId] = useState("");
@@ -12,7 +13,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [error, setError] = useState("");
-
 
   const handelLoginClick = async (e) => {
     e.preventDefault();
@@ -28,7 +28,6 @@ const Login = () => {
 
       dispatch(addUser(res.data));
       return navigate("/feed");
-
     } catch (error) {
       setError(error?.response?.message || "Something went wrong :(");
       console.error(error);
@@ -43,6 +42,13 @@ const Login = () => {
       }}
     >
       <div className="max-w-lg w-full rounded-lg shadow-lg p-8 space-y-6 bg-base-200 ">
+        <button
+          onClick={() => navigate("/")}
+          className="cursor-pointer absolute top-4 left-4 px-4 py-2 text-md text-white rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </button>
         <div className="flex justify-center cursor-pointer">
           <span className="text-xl font-mono text-cyan-500">
             &lt;&#9679;&gt;
@@ -53,7 +59,7 @@ const Login = () => {
         </div>
 
         <h2 className="my-10 text-center text-3xl font-bold text-white">
-         <span className="text-cyan-500">Log in</span> to your account
+          <span className="text-cyan-500">Log in</span> to your account
         </h2>
 
         <form className="space-y-4 my-6">

@@ -5,6 +5,8 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { toast } from "react-toastify";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const titleOptions = ["Student", "Fresher", "Professional"];
 const skillOptions = [
@@ -37,6 +39,7 @@ const EditProfile = ({ user }) => {
 
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleSkill = (skill) => {
     if (skill.length > 10) return;
@@ -95,6 +98,13 @@ const EditProfile = ({ user }) => {
   return (
     <>
       <div className="min-h-screen bg-gradient-to-br from-[#020013] via-cyan-900/2 to-[#020013] px-4 py-10 flex flex-col lg:flex-row items-start justify-center gap-10">
+        <button
+          onClick={() => navigate(-1)}
+          className="cursor-pointer absolute top-20 left-13 px-4 py-2 text-md text-white rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </button>
         <form className="w-full max-w-2xl bg-transparent backdrop-blur-md p-8 rounded-3xl border border-white/10 shadow-lg space-y-6 text-white">
           <h2 className="text-2xl font-semibold text-center">
             Edit Your Profile

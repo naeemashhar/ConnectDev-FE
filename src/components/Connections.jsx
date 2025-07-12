@@ -5,10 +5,13 @@ import { BASE_URL } from "../utils/constants";
 import { addConnections, removeConnections } from "../utils/connectionSlice";
 
 import { toast } from "react-toastify";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Connections = () => {
   const dispatch = useDispatch();
   const connections = useSelector((store) => store.connection);
+  const navigate = useNavigate();
 
   const fetchConnections = async () => {
     try {
@@ -52,6 +55,13 @@ const Connections = () => {
       }}
     >
       <div className="max-w-6xl mx-auto">
+         <button
+          onClick={() => navigate(-1)}
+          className="cursor-pointer absolute top-20 left-13 px-4 py-2 text-md text-white rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </button>
         <h2 className="text-3xl font-semibold mb-6">
           Your <span className="text-cyan-500">Connections</span>
         </h2>
