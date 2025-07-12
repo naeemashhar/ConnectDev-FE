@@ -254,7 +254,7 @@ const LandingPage = () => {
       {/* Footer */}
       <footer className="text-center py-6 text-white/50 text-sm">
         © {new Date().getFullYear()} Connect.dev — Built for Developers, by
-        Developers.
+        Developer.
       </footer>
     </div>
   );

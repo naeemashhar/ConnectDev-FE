@@ -26,13 +26,13 @@ const Feed = () => {
     getFeed();
   }, []);
 
-  if (!feed) return <div className="text-white">Loading feed...</div>;
+  if (!feed) return <div className="text-cyan-300 flex justify-center text-2xl font-bold">Loading feed...</div>;
 
   if (feed.length <= 0) {
     return (
-      <div className="text-white text-center mt-10 text-2xl font-bold" >
-        You've reviewed all available profiles. New developers will appear as
-        they join.
+      <div className="text-[#D9DFF2 ] text-center mt-40 text-2xl font-bold">
+        No more profiles for now. <span className="text-cyan-500">Refresh</span>{" "}
+        to see if new developers have joined!
       </div>
     );
   }
