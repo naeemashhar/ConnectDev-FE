@@ -89,7 +89,7 @@ const EditProfile = ({ user }) => {
         { withCredentials: true }
       );
       dispatch(addUser(res?.data?.data));
-      toast.success("Profile Updated Successfully")
+      toast.success("Profile Updated Successfully");
     } catch (error) {
       setError(error.response?.data || "Something went wrong.");
     }
@@ -97,15 +97,16 @@ const EditProfile = ({ user }) => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-[#020013] via-cyan-900/2 to-[#020013] px-4 py-10 flex flex-col lg:flex-row items-start justify-center gap-10">
+      <div className="min-h-screen bg-gradient-to-br from-[#020013] via-cyan-900/2 to-[#020013] px-4 py-10 flex flex-col lg:flex-row items-start justify-center gap-10 relative">
         <button
           onClick={() => navigate(-1)}
-          className="cursor-pointer absolute top-6 left-6 px-4 py-2 text-md text-white rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
+          className="cursor-pointer px-4 py-2 text-md text-white rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2 lg:absolute lg:top-6 lg:left-6"
         >
           <ArrowLeft className="w-4 h-4" />
           Back
         </button>
-        <form className="w-full max-w-2xl bg-transparent backdrop-blur-md p-8 rounded-3xl border border-white/10 shadow-lg space-y-6 text-white">
+
+        <form className="w-full max-w-2xl bg-transparent backdrop-blur-md p-8 rounded-3xl border border-white/10 shadow-lg space-y-6 text-white mt-12 lg:mt-0">
           <h2 className="text-2xl font-semibold text-center">
             Edit Your Profile
           </h2>
@@ -219,7 +220,7 @@ const EditProfile = ({ user }) => {
                     className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm border font-mono ${
                       selected
                         ? "bg-cyan-400 text-[#23282b] border-cyan-400 font-semibold"
-                        : "text-[#D9DFF2 ] border-white/20"
+                        : "text-[#D9DFF2] border-white/20"
                     } hover:bg-cyan-600 transition`}
                   >
                     <img src={logo} alt={name} className="w-5 h-5 rounded" />
@@ -251,7 +252,7 @@ const EditProfile = ({ user }) => {
           </div>
 
           {/* Buttons */}
-          <div className="text-center">
+          <div className="text-center flex flex-col md:flex-row justify-center items-center gap-4">
             <button
               className="btn btn-primary px-10 border-2 border-cyan-400 hover:text-[#D9DFF2]"
               onClick={(e) => {
@@ -261,7 +262,7 @@ const EditProfile = ({ user }) => {
             >
               Save Profile
             </button>
-            <button className="btn btn-primary px-10 ml-8 border-2 border-red-600 hover:bg-red-600">
+            <button className="btn btn-primary px-10 border-2 border-red-600 hover:bg-red-600">
               Delete Profile
             </button>
           </div>
