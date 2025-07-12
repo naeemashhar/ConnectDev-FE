@@ -16,11 +16,17 @@ const Requests = () => {
   const reviewRequest = async (status, _id) => {
     try {
       setLoadingId(_id);
-      await axios.post(BASE_URL + "/request/review/" + status + "/" + _id, {}, {
-        withCredentials: true,
-      });
+      await axios.post(
+        BASE_URL + "/request/review/" + status + "/" + _id,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
       dispatch(removeRequest(_id));
-      toast.success(`Request ${status === "accepted" ? "accepted" : "rejected"}`);
+      toast.success(
+        `Request ${status === "accepted" ? "accepted" : "rejected"}`
+      );
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong. Try again.");
@@ -59,7 +65,7 @@ const Requests = () => {
         <div>
           <button
             onClick={() => navigate(-1)}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white border border-white/20 rounded-md hover:bg-white/10 transition"
+            className="cursor-pointer fixed top-4 left-4 z-50 px-4 py-2 text-sm md:text-md text-white rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
             Back
