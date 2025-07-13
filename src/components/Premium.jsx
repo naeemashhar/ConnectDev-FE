@@ -54,6 +54,7 @@ const Premium = () => {
 
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4 md:px-6">
+          
           {/* Silver Membership */}
           <div className="bg-white/30 dark:bg-cyan/5  dark:bg-transparent backdrop-blur-[6px] border border-white/40 dark:border-white/10 rounded-xl p-8 flex flex-col shadow-md hover:shadow-gray-400/30 dark:hover:shadow-gray-500/25 transition">
             <h3 className="text-2xl font-semibold text-[#021431] dark:text-gray-300 mb-2">
