@@ -104,17 +104,17 @@ const SignUp = () => {
   };
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-[#020013] via-gray-900/5 to-[#020013] px-4 py-12 flex justify-center">
-       <button
-          onClick={() => navigate(-1)}
-          className="cursor-pointer absolute top-4 left-4 px-4 py-2 text-md text-white rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back
-        </button>
+    <section className="min-h-screen bg-gradient-to-br from-[#dfe0e3] via-[#ffffff] to-[#c9ccd0] dark:from-[#020013] dark:via-gray-900/5 dark:to-[#020013] px-4 py-12 flex justify-center">
+      <button
+        onClick={() => navigate(-1)}
+        className="cursor-pointer absolute top-4 left-4 px-4 py-2 text-md text-gray-900 dark:text-white rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back
+      </button>
       <form
         onSubmit={handleSubmit}
-        className="max-w-2xl w-full rounded-lg shadow-lg p-8 space-y-6 bg-base-200 text-white"
+        className="max-w-2xl w-full rounded-lg shadow-lg p-8 space-y-6 bg-[#E3E9F4] dark:bg-base-200 text-gray-900 dark:text-white"
       >
         <h2 className="text-3xl font-bold text-center mb-4">
           <span className="text-cyan-500">Create</span> a new account
@@ -128,9 +128,12 @@ const SignUp = () => {
             onChange={(e) =>
               setFormData({ ...formData, firstName: e.target.value })
             }
-            className="input input-bordered w-full"
+            className="input input-bordered w-full 
+    bg-[#F2F7FE] text-[#021431] placeholder:text-[#555] 
+    dark:bg-[#1a1a2e] dark:text-white dark:placeholder:text-gray-400"
             required
           />
+
           <input
             type="text"
             placeholder="Last Name"
@@ -138,7 +141,9 @@ const SignUp = () => {
             onChange={(e) =>
               setFormData({ ...formData, lastName: e.target.value })
             }
-            className="input input-bordered w-full"
+            className="input input-bordered w-full 
+    bg-[#F2F7FE] text-[#021431] placeholder:text-[#555] 
+    dark:bg-[#1a1a2e] dark:text-white dark:placeholder:text-gray-400"
           />
         </div>
 
@@ -149,7 +154,9 @@ const SignUp = () => {
           onChange={(e) =>
             setFormData({ ...formData, emailId: e.target.value })
           }
-          className="input input-bordered w-full"
+          className="input input-bordered w-full 
+    bg-[#F2F7FE] text-[#021431] placeholder:text-[#555] 
+    dark:bg-[#1a1a2e] dark:text-white dark:placeholder:text-gray-400"
           required
         />
 
@@ -160,7 +167,9 @@ const SignUp = () => {
           onChange={(e) =>
             setFormData({ ...formData, password: e.target.value })
           }
-          className="input input-bordered w-full "
+          className="input input-bordered w-full 
+    bg-[#F2F7FE] text-[#021431] placeholder:text-[#555] 
+    dark:bg-[#1a1a2e] dark:text-white dark:placeholder:text-gray-400"
           required
         />
 
@@ -171,20 +180,26 @@ const SignUp = () => {
           onChange={(e) =>
             setFormData({ ...formData, photoURL: e.target.value })
           }
-          className="input input-bordered w-full"
+          className="input input-bordered w-full 
+    bg-[#F2F7FE] text-[#021431] placeholder:text-[#555] 
+    dark:bg-[#1a1a2e] dark:text-white dark:placeholder:text-gray-400"
         />
 
         <textarea
           placeholder="About"
           rows={3}
-          className="textarea textarea-bordered w-full"
+          className="textarea textarea-bordered w-full 
+    bg-[#F2F7FE] text-[#021431] placeholder:text-[#555] 
+    dark:bg-[#1a1a2e] dark:text-white dark:placeholder:text-gray-400"
           onChange={(e) => setFormData({ ...formData, about: e.target.value })}
           value={formData.about}
         />
 
         {/* Title */}
         <div>
-          <p className="mb-1 text-white/70">Select Your Title</p>
+          <p className="mb-1 text-gray-900 dark:text-white/70">
+            Select Your Title
+          </p>
           <div className="flex flex-wrap gap-2">
             {titleOptions.map((title) => (
               <button
@@ -194,7 +209,7 @@ const SignUp = () => {
                 className={`px-3 py-1 rounded-full border ${
                   formData.title === title
                     ? "bg-cyan-500 text-[#23282b] border-cyan-500"
-                    : "text-[#D9DFF2] border-white/20"
+                    : "text-gray-900 dark:text-[#D9DFF2] border-gray-600 dark:border-white/20"
                 } hover:bg-cyan-600 transition`}
               >
                 {title}
@@ -212,16 +227,21 @@ const SignUp = () => {
             onChange={(e) =>
               setFormData({ ...formData, age: Number(e.target.value) })
             }
-            className="input input-bordered w-full"
             min={14}
             max={100}
+            className="input input-bordered w-full 
+      bg-[#F2F7FE] text-[#021431] placeholder:text-[#555] 
+      dark:bg-[#1a1a2e] dark:text-white dark:placeholder:text-gray-400"
           />
+
           <select
             value={formData.gender}
-            className="select select-bordered w-full"
             onChange={(e) =>
               setFormData({ ...formData, gender: e.target.value })
             }
+            className="select select-bordered w-full 
+      bg-[#F2F7FE] text-[#021431] 
+      dark:bg-[#1a1a2e] dark:text-white"
           >
             <option value="" disabled>
               Select Gender
@@ -238,8 +258,11 @@ const SignUp = () => {
             placeholder="City"
             value={formData.city}
             onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-            className="input input-bordered w-full"
+            className="input input-bordered w-full 
+      bg-[#F2F7FE] text-[#021431] placeholder:text-[#555] 
+      dark:bg-[#1a1a2e] dark:text-white dark:placeholder:text-gray-400"
           />
+
           <input
             type="text"
             placeholder="Country"
@@ -247,13 +270,15 @@ const SignUp = () => {
             onChange={(e) =>
               setFormData({ ...formData, country: e.target.value })
             }
-            className="input input-bordered w-full"
+            className="input input-bordered w-full 
+      bg-[#F2F7FE] text-[#021431] placeholder:text-[#555] 
+      dark:bg-[#1a1a2e] dark:text-white dark:placeholder:text-gray-400"
           />
         </div>
 
         {/* Skills */}
         <div>
-          <p className="mb-1 text-white/70">Select Skills</p>
+          <p className="mb-1 text-gray-900 dark:text-white/70">Select Skills</p>
           <div className="flex flex-wrap gap-2">
             {skillOptions.map(({ name, logo }) => {
               const selected = formData.skills.includes(name);
@@ -265,7 +290,7 @@ const SignUp = () => {
                   className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm border font-mono ${
                     selected
                       ? "bg-cyan-400 text-[#23282b] border-cyan-400 font-semibold"
-                      : "text-[#D9DFF2] border-white/20"
+                      : "text-gray-900 dark:text-[#D9DFF2] border-gray-600 dark:border-white/20"
                   } hover:bg-cyan-600 transition`}
                 >
                   <img src={logo} alt={name} className="w-5 h-5 rounded" />
@@ -281,15 +306,22 @@ const SignUp = () => {
         <div className="text-center">
           <button
             type="submit"
-            className="btn btn-primary border-2 border-cyan-400 hover:text-[#D9DFF2] px-10"
+            className="btn btn-primary px-10 border-2 
+      border-gray-400 hover:text-white 
+      bg-gray-600 text-white hover:bg-blue-500 
+      dark:bg-transparent dark:text-cyan-400 
+      dark:hover:text-[#D9DFF2] dark:hover:bg-cyan-500/10 transition"
           >
             Sign Up
           </button>
         </div>
 
-        <p className="text-center text-sm mt-4 text-white/70">
+        <p className="text-center text-sm mt-4 text-gray-900 dark:text-white/70">
           Already have an account?{" "}
-          <Link to="/login" className="text-cyan-400 hover:underline">
+          <Link
+            to="/login"
+            className="text-blue-400 font-semibold dark:text-cyan-400 hover:underline"
+          >
             Login here
           </Link>
         </p>
