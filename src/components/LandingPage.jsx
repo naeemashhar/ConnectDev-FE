@@ -1,15 +1,13 @@
 import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef, useState } from "react";
-import { Info, LogIn, SunMoon } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { Info, LogIn, SunMoon, Sun, Moon } from "lucide-react";
 import { RiMenu3Fill } from "@remixicon/react";
-
-import { Sun, Moon } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const LandingPage = () => {
+const LandingPage = ({ theme, setTheme }) => {
   const heroRef = useRef(null);
   const featuresRef = useRef(null);
   const howItWorksRef = useRef(null);
@@ -41,22 +39,6 @@ const LandingPage = () => {
     fadeIn(ctaRef.current);
   }, []);
 
-  const getInitialTheme = () => {
-    const savedTheme = localStorage.getItem("theme");
-    const systemPreferDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    return savedTheme || (systemPreferDark ? "dark" : "light");
-  };
-
-  const [theme, setTheme] = useState(getInitialTheme);
-
-  useEffect(() => {
-    const html = document.documentElement;
-    html.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
@@ -69,7 +51,6 @@ const LandingPage = () => {
     >
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 border-b border-black/10 bg-white/50 backdrop-blur dark:border-white/10 dark:bg-[#020013]/50">
-        {/* Left: Logo */}
         <div className="flex items-center gap-2 flex-1">
           <span className="text-xl sm:text-2xl font-mono text-cyan-500">
             &lt;&#9679;&gt;
@@ -82,22 +63,20 @@ const LandingPage = () => {
           </Link>
         </div>
 
-        {/* Right: Desktop Options */}
+        {/* Desktop Nav */}
         <div className="hidden sm:flex items-center gap-3">
-          {/* Theme Toggle Icon */}
           <button
             onClick={toggleTheme}
             aria-label="Toggle Theme"
             className="shadow-lg cursor-pointer w-10 h-10 flex items-center justify-center rounded-full border-0 border-gray-300 dark:border-gray-700 bg-white/70 dark:bg-transparent backdrop-blur hover:scale-105 hover:shadow-md transition-all duration-300"
           >
             {theme === "dark" ? (
-              <Sun className="w-5 h-5 text-yellow-300 transition-transform duration-300 rotate-0" />
+              <Sun className="w-5 h-5 text-yellow-300" />
             ) : (
-              <Moon className="w-5 h-5 text-gray-700 transition-transform duration-300 rotate-0" />
+              <Moon className="w-5 h-5 text-gray-700" />
             )}
           </button>
 
-          {/* About Link */}
           <Link
             className="btn btn-ghost text-sm sm:text-lg text-black dark:hover:bg-black hover:bg-[#E3E9F4] border-0 dark:text-white"
             to="/about"
@@ -105,7 +84,6 @@ const LandingPage = () => {
             About
           </Link>
 
-          {/* Login CTA */}
           <Link to="/login">
             <button className="text-sm sm:text-base cursor-pointer px-4 py-2 border border-cyan-400 text-cyan-400 rounded hover:bg-cyan-500 hover:text-black transition-all">
               Login to your account
@@ -113,12 +91,11 @@ const LandingPage = () => {
           </Link>
         </div>
 
-        {/* Mobile Menu Toggle */}
+        {/* Mobile Nav */}
         <div className="sm:hidden dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
             <RiMenu3Fill className="w-5 h-5 dark:text-white text-black" />
           </label>
-
           <ul
             tabIndex={0}
             className="dropdown-content mt-3 z-[1] p-3 shadow-xl bg-gray-100 dark:bg-base-200 rounded-xl w-52 text-sm text-black dark:text-[#D9DFF2] space-y-2"
@@ -126,23 +103,21 @@ const LandingPage = () => {
             <li>
               <Link
                 to="/about"
-                className="border-b-[0.1px] border-gray-300 dark:border-gray-600 flex items-center gap-2 px-3 py-2 hover:bg-gray-200 dark:hover:bg-base-300 transition"
+                className="border-b border-gray-300 dark:border-gray-600 flex items-center gap-2 px-3 py-2 hover:bg-gray-200 dark:hover:bg-base-300 transition"
               >
                 <Info className="w-4 h-4 text-cyan-400" />
                 About
               </Link>
             </li>
-
             <li>
               <Link
                 to="/login"
-                className="border-b-[0.1px] border-gray-300 dark:border-gray-600 flex items-center gap-2 px-3 py-2 hover:bg-gray-200 dark:hover:bg-base-300 transition"
+                className="border-b border-gray-300 dark:border-gray-600 flex items-center gap-2 px-3 py-2 hover:bg-gray-200 dark:hover:bg-base-300 transition"
               >
                 <LogIn className="w-4 h-4 text-cyan-400" />
                 Login
               </Link>
             </li>
-
             <li>
               <div className="flex justify-between items-center px-3 py-2 rounded-md hover:bg-gray-200 dark:hover:bg-base-300 transition">
                 <span className="flex items-center gap-2">
@@ -292,24 +267,24 @@ const LandingPage = () => {
             </h3>
             <ul className="space-y-2">
               <li>
-                <a href="/" className="hover:text-cyan-400 transition">
+                <Link to="/feed" className="hover:text-cyan-400 transition">
                   Developer Feed
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/" className="hover:text-cyan-400 transition">
+                <Link to="/connections" className="hover:text-cyan-400 transition">
                   Connections
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/" className="hover:text-cyan-400 transition">
+                <Link to="/requests" className="hover:text-cyan-400 transition">
                   Requests
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/" className="hover:text-cyan-400 transition">
+                <Link to="/premium" className="hover:text-cyan-400 transition">
                   Premium Access
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -321,9 +296,9 @@ const LandingPage = () => {
             </h3>
             <ul className="space-y-2">
               <li>
-                <a href="/" className="hover:text-cyan-400 transition">
+                <Link to="/about" className="hover:text-cyan-400 transition">
                   About
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="/" className="hover:text-cyan-400 transition">

@@ -57,7 +57,7 @@ const Login = () => {
       className="min-h-screen flex items-center justify-center px-4 bg-center bg-no-repeat bg-cover"
       style={backgroundStyle}
     >
-      <div className="max-w-lg w-full rounded-lg shadow-lg p-8 space-y-6 bg-[#F2F7FE] dark:bg-base-200">
+      <div className="max-w-lg w-full rounded-lg shadow-lg p-8 space-y-6 bg-[#F2F7FE] dark:bg-[#020013]">
         <button
           onClick={() => navigate("/")}
           className="cursor-pointer fixed top-6 left-6 z-20 px-4 py-2 text-md text-[#021431] dark:text-white rounded hover:bg-black/5 dark:hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"

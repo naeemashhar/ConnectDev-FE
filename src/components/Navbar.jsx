@@ -45,7 +45,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar px-4 py-2 shadow-md bg-white text-gray-800 dark:bg-base-200 dark:text-white transition-colors duration-300">
+    <div className="navbar px-4 py-2 shadow-md bg-white text-gray-800 dark:bg-[#020013] dark:text-white transition-colors duration-300">
       {/* Logo */}
       <div className="flex-1 cursor-pointer">
         <span className="text-2xl font-mono text-cyan-600 dark:text-cyan-500">

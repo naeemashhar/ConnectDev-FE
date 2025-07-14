@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../utils/constants";
-import { addConnections, removeConnections } from "../utils/connectionSlice";
+import { addConnections } from "../utils/connectionSlice";
 import { toast } from "react-toastify";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -26,15 +26,9 @@ const Connections = () => {
     }
   };
 
-  const handleRemove = async (id) => {
-    try {
-      await axios.delete(`${BASE_URL}/user/connections/${id}`, {
-        withCredentials: true,
-      });
-      dispatch(removeConnections(id));
-    } catch (error) {
-      console.error("Failed to remove connection:", error);
-    }
+  // 🧹 Placeholder function for remove
+  const handleRemove = () => {
+    toast.info("🧹 Remove feature is coming soon!");
   };
 
   useEffect(() => {
@@ -74,12 +68,12 @@ const Connections = () => {
         {/* Back button */}
         <div className="mb-6 lg:mb-0">
           <button
-          onClick={() => navigate(-1)}
-          className="cursor-pointer fixed top-6 left-6 z-20 px-4 py-2 text-md text-[#021431] dark:text-white rounded hover:bg-black/5 dark:hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back
-        </button>
+            onClick={() => navigate("/feed")}
+            className="cursor-pointer fixed top-6 left-6 z-20 px-4 py-2 text-md text-[#021431] dark:text-white rounded hover:bg-black/5 dark:hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back
+          </button>
         </div>
 
         <h2 className="text-3xl font-semibold mb-6 mt-4 lg:mt-0">

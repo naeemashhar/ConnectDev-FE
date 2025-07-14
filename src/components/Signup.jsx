@@ -114,7 +114,7 @@ const SignUp = () => {
         </button>
       <form
         onSubmit={handleSubmit}
-        className="max-w-2xl w-full rounded-lg shadow-lg p-8 space-y-6 bg-[#E3E9F4] dark:bg-base-200 text-gray-900 dark:text-white"
+        className="max-w-2xl w-full rounded-lg shadow-lg p-8 space-y-6 bg-[#E3E9F4] dark:bg-[#020013] text-gray-900 dark:text-white"
       >
         <h2 className="text-3xl font-bold text-center mb-4">
           <span className="text-cyan-500">Create</span> a new account

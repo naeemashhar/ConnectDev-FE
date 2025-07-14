@@ -75,7 +75,7 @@ const Requests = () => {
       <div className="max-w-6xl mx-auto space-y-8 relative z-10">
         {/* Back Button */}
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/feed")}
           className="cursor-pointer fixed top-4 left-4 z-50 px-4 py-2 text-sm md:text-md text-[#021431] dark:text-white rounded hover:bg-black/5 dark:hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
         >
           <ArrowLeft className="w-4 h-4" />

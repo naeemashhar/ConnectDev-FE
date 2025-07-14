@@ -12,18 +12,30 @@ import Requests from "./components/Requests";
 import Signup from "./components/Signup";
 import LandingPage from "./components/LandingPage";
 
+import { useEffect, useState } from "react";
+
+const getInitialTheme = () => {
+  const savedTheme = localStorage.getItem("theme");
+  const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  return savedTheme || (systemPrefersDark ? "dark" : "light");
+};
+
 const App = () => {
+  const [theme, setTheme] = useState(getInitialTheme);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
   return (
-    <div
-      data-theme="mytheme"
-      className="min-h-screen bg-gray-300 dark:bg-[#020013] text-base-content "
-    >
+    <div className="min-h-screen bg-gray-300 dark:bg-[#020013] text-base-content">
       <Provider store={appStore}>
         <BrowserRouter basename="/">
           <Routes>
             <Route path="/" element={<Body />}>
-              <Route index element={<LandingPage />} />
-              <Route path="/about" element={<About />} />
+              <Route index element={<LandingPage theme={theme} setTheme={setTheme} />} />
+              <Route path="/about" element={<About theme={theme} setTheme={setTheme} />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/feed" element={<Feed />} />

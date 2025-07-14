@@ -117,7 +117,7 @@ const EditProfile = ({ user }) => {
   return (
     <div className="min-h-screen px-4 py-10 flex flex-col lg:flex-row items-start justify-center gap-10 relative bg-gradient-to-br from-[#F2F7FE] via-[#E3E9F4] to-[#F2F7FE] dark:from-[#020013] dark:via-cyan-900/2 dark:to-[#020013]">
       <button
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/feed")}
         className="cursor-pointer fixed top-6 left-6 z-20 px-4 py-2 text-md text-[#021431] dark:text-white rounded hover:bg-black/5 dark:hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
       >
         <ArrowLeft className="w-4 h-4" />
