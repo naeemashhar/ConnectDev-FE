@@ -16,7 +16,7 @@ const App = () => {
   return (
     <div
       data-theme="mytheme"
-      className="min-h-screen bg-gradient-to-br from-[#020013] via-cyan-500/10 to-[#020013] text-base-content "
+      className="min-h-screen bg-gray-300 dark:bg-[#020013] text-base-content "
     >
       <Provider store={appStore}>
         <BrowserRouter basename="/">

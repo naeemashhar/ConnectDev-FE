@@ -3,7 +3,7 @@ import PreviewCard from "./PreviewCard";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
-import { addUser } from "../utils/userSlice";
+import { addUser, removeUser } from "../utils/userSlice";
 import { toast } from "react-toastify";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -36,13 +36,17 @@ const EditProfile = ({ user }) => {
   const [photoURL, setPhotoURL] = useState(user.photoURL || "");
   const [title, setTitle] = useState(user.title || "");
   const [skills, setSkills] = useState(user.skills || []);
-
   const [error, setError] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const toggleSkill = (skill) => {
-    if (skill.length > 10) return;
+    if (skills.length >= 10 && !skills.includes(skill)) {
+      toast.warning("You can only select up to 10 skills.");
+      return;
+    }
     setSkills((prev) =>
       prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill]
     );
@@ -56,7 +60,7 @@ const EditProfile = ({ user }) => {
       return "Please select a valid gender.";
     if (!city.trim()) return "City is required.";
     if (!country.trim()) return "Country is required.";
-    if (photoURL && !/^https?:\/\/.+\..+/.test(photoURL))
+    if (photoURL && !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(photoURL))
       return "Invalid photo URL.";
     const uniqueSkills = new Set(skills.map((s) => s.toLowerCase()));
     if (uniqueSkills.size !== skills.length) return "Skills must be unique.";
@@ -95,208 +99,236 @@ const EditProfile = ({ user }) => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await axios.delete(BASE_URL + "/profile/delete", {
+        withCredentials: true,
+      });
+      dispatch(removeUser());
+      toast.success("Your profile has been deleted.");
+      navigate("/login");
+    } catch (err) {
+      toast.error("Failed to delete: " + (err.response?.data || err.message));
+    } finally {
+      setShowConfirm(false);
+    }
+  };
+
   return (
-    <>
-      <div
-        className="min-h-screen px-4 py-10 flex flex-col lg:flex-row items-start justify-center gap-10 relative
-  bg-gradient-to-br 
-  from-[#F2F7FE] via-[#E3E9F4] to-[#F2F7FE] 
-  dark:from-[#020013] dark:via-cyan-900/2 dark:to-[#020013]
-"
+    <div className="min-h-screen px-4 py-10 flex flex-col lg:flex-row items-start justify-center gap-10 relative bg-gradient-to-br from-[#F2F7FE] via-[#E3E9F4] to-[#F2F7FE] dark:from-[#020013] dark:via-cyan-900/2 dark:to-[#020013]">
+      <button
+        onClick={() => navigate(-1)}
+        className="cursor-pointer fixed top-6 left-6 z-20 px-4 py-2 text-md text-[#021431] dark:text-white rounded hover:bg-black/5 dark:hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
       >
-        <button
-          onClick={() => navigate(-1)}
-          className="cursor-pointer fixed top-6 left-6 z-20 px-4 py-2 text-md text-[#021431] dark:text-white rounded hover:bg-black/5 dark:hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back
-        </button>
+        <ArrowLeft className="w-4 h-4" />
+        Back
+      </button>
 
-        <form className="w-full max-w-2xl bg-white/40 dark:bg-transparent backdrop-blur-md p-8 rounded-3xl border border-[#C9D6F2] dark:border-white/10 shadow-lg space-y-6 text-[#021431] dark:text-white mt-12 lg:mt-0">
-          <h2 className="text-2xl font-semibold text-center">
-            Edit Your Profile
-          </h2>
+      <form className="w-full max-w-2xl bg-white/40 dark:bg-transparent backdrop-blur-md p-8 rounded-3xl border border-[#C9D6F2] dark:border-white/10 shadow-lg space-y-6 text-[#021431] dark:text-white mt-12 lg:mt-0">
+        <h2 className="text-2xl font-semibold text-center">
+          Edit Your Profile
+        </h2>
 
-          {/* First & Last Name */}
-          <div className="flex flex-col md:flex-row gap-4">
-            <input
-              type="text"
-              name="firstName"
-              onChange={(e) => setFirstName(e.target.value)}
-              value={firstName}
-              placeholder="First Name"
-              className="input input-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
-              required
-            />
-            <input
-              type="text"
-              name="lastName"
-              onChange={(e) => setLastName(e.target.value)}
-              value={lastName}
-              placeholder="Last Name"
-              className="input input-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
-              required
-            />
-          </div>
-
-          {/* Title Selection */}
-          <div>
-            <p className="mb-1 text-gray-600 dark:text-white/70">
-              Select Your Title
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {titleOptions.map((role) => (
-                <button
-                  key={role}
-                  type="button"
-                  onClick={() => setTitle(role)}
-                  className={`px-3 py-1 rounded-full border transition font-medium ${
-                    title === role
-                      ? "bg-cyan-500 text-white border-cyan-500"
-                      : "text-[#23282b] dark:text-[#D9DFF2] border-gray-300 dark:border-white/20"
-                  } hover:bg-cyan-600 hover:text-white`}
-                >
-                  {role}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* About */}
-          <textarea
-            name="about"
-            onChange={(e) => setAbout(e.target.value)}
-            value={about}
-            placeholder="Tell us about yourself..."
-            rows={4}
-            className="textarea textarea-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
-          />
-
-          {/* Age & Gender */}
-          <div className="flex flex-col md:flex-row gap-4">
-            <input
-              type="number"
-              name="age"
-              placeholder="Age"
-              onChange={(e) => {
-                const value = Number(e.target.value);
-                if (value >= 0 && value <= 100) setAge(value);
-              }}
-              value={age}
-              className="input input-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
-              required
-              min={14}
-              max={100}
-            />
-            <select
-              name="gender"
-              onChange={(e) => setGender(e.target.value)}
-              value={gender}
-              className="select select-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
-              required
-            >
-              <option value="" disabled>
-                Select Gender
-              </option>
-              <option>Male</option>
-              <option>Female</option>
-              <option>Other</option>
-            </select>
-          </div>
-
-          {/* Photo URL */}
+        {/* Name */}
+        <div className="flex flex-col md:flex-row gap-4">
           <input
             type="text"
-            name="photoURL"
-            onChange={(e) => setPhotoURL(e.target.value)}
-            value={photoURL}
-            placeholder="Photo URL"
-            className="input input-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            className="input input-bordered w-full bg-white dark:bg-transparent dark:text-white"
           />
+          <input
+            type="text"
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            className="input input-bordered w-full bg-white dark:bg-transparent dark:text-white"
+          />
+        </div>
 
-          {/* Skills */}
-          <div>
-            <p className="mb-1 text-gray-600 dark:text-white/70">
-              Select Skills
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {skillOptions.map(({ name, logo }) => {
-                const selected = skills.includes(name);
-                return (
-                  <button
-                    key={name}
-                    type="button"
-                    onClick={() => toggleSkill(name)}
-                    className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm border font-mono transition ${
-                      selected
-                        ? "bg-cyan-400 text-white border-cyan-400 font-semibold"
-                        : "text-[#23282b] dark:text-[#D9DFF2] border-gray-300 dark:border-white/20"
-                    } hover:bg-cyan-600 hover:text-white`}
-                  >
-                    <img src={logo} alt={name} className="w-5 h-5 rounded" />
-                    &lt;{name}&gt;
-                  </button>
-                );
-              })}
+        {/* Title */}
+        <div>
+          <p className="mb-1 text-gray-600 dark:text-white/70">
+            Select Your Title
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {titleOptions.map((role) => (
+              <button
+                key={role}
+                type="button"
+                onClick={() => setTitle(role)}
+                className={`px-3 py-1 rounded-full border transition font-medium ${
+                  title === role
+                    ? "bg-cyan-500 text-white border-cyan-500"
+                    : "text-[#23282b] dark:text-[#D9DFF2] border-gray-300 dark:border-white/20"
+                } hover:bg-cyan-600 hover:text-white`}
+              >
+                {role}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* About */}
+        <textarea
+          rows={4}
+          placeholder="Tell us about yourself..."
+          value={about}
+          onChange={(e) => setAbout(e.target.value)}
+          className="textarea textarea-bordered w-full bg-white dark:bg-transparent dark:text-white"
+        />
+
+        {/* Age & Gender */}
+        <div className="flex flex-col md:flex-row gap-4">
+          <input
+            type="number"
+            min={14}
+            max={100}
+            placeholder="Age"
+            value={age}
+            onChange={(e) => setAge(Number(e.target.value))}
+            className="input input-bordered w-full bg-white dark:bg-transparent dark:text-white"
+          />
+          <select
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+            className="select select-bordered w-full bg-white dark:bg-transparent dark:text-white"
+          >
+            <option value="" disabled>
+              Select Gender
+            </option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        {/* Photo URL */}
+        <input
+          type="text"
+          placeholder="Photo URL"
+          value={photoURL}
+          onChange={(e) => setPhotoURL(e.target.value)}
+          className="input input-bordered w-full bg-white dark:bg-transparent dark:text-white"
+        />
+
+        {/* Skills */}
+        <div>
+          <p className="mb-1 text-gray-600 dark:text-white/50">Select Skills</p>
+          <div className="flex flex-wrap gap-2">
+            {skillOptions.map(({ name, logo }) => {
+              const selected = skills.includes(name);
+              return (
+                <button
+                  key={name}
+                  type="button"
+                  onClick={() => toggleSkill(name)}
+                  className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm border font-mono transition ${
+                    selected
+                      ? "bg-cyan-400 text-white dark:text-gray-900 border-cyan-400 font-semibold"
+                      : "text-[#23282b] dark:text-[#bbc0d1] border-gray-300 dark:border-white/20"
+                  } hover:bg-cyan-600 hover:text-white`}
+                >
+                  <img src={logo} alt={name} className="w-5 h-5 rounded" />
+                  &lt;{name}&gt;
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* City & Country */}
+        <div className="flex flex-col md:flex-row gap-4">
+          <input
+            type="text"
+            placeholder="City"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            className="input input-bordered w-full bg-white dark:bg-transparent dark:text-white"
+          />
+          <input
+            type="text"
+            placeholder="Country"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+            className="input input-bordered w-full bg-white dark:bg-transparent dark:text-white"
+          />
+        </div>
+
+        {/* Save + Delete Buttons */}
+        <div className="text-center flex flex-col md:flex-row justify-center items-center gap-4">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              saveProfile();
+            }}
+            className="btn btn-primary px-10 border-2 border-cyan-400 bg-cyan-500 hover:bg-cyan-600 text-white"
+          >
+            Save Profile
+          </button>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault(); // just in case
+              setShowConfirm(true);
+            }}
+            className="btn px-10 border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
+          >
+            Delete Profile
+          </button>
+        </div>
+
+        {/* Confirmation Modal */}
+        {showConfirm && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white dark:bg-[#1a1a2e] text-[#021431] dark:text-white p-6 rounded-xl shadow-xl w-full max-w-md space-y-4">
+              <h2 className="text-lg font-semibold">Delete Profile</h2>
+              <p className="text-sm">
+                Are you sure you want to delete your profile permanently? This
+                action cannot be undone.
+              </p>
+              <div className="flex justify-end gap-3 pt-4">
+                <button
+                  onClick={() => setShowConfirm(false)}
+                  className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-sm"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault(); // block default form action
+                    handleDelete(); // perform delete
+                  }}
+                  className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 text-sm"
+                >
+                  Yes, Delete
+                </button>
+              </div>
             </div>
           </div>
+        )}
 
-          {/* City & Country */}
-          <div className="flex flex-col md:flex-row gap-4">
-            <input
-              type="text"
-              name="city"
-              placeholder="City"
-              onChange={(e) => setCity(e.target.value)}
-              value={city}
-              className="input input-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
-            />
-            <input
-              type="text"
-              name="country"
-              onChange={(e) => setCountry(e.target.value)}
-              value={country}
-              placeholder="Country"
-              className="input input-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
-            />
-          </div>
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+      </form>
 
-          {/* Buttons */}
-          <div className="text-center flex flex-col md:flex-row justify-center items-center gap-4">
-            <button
-              className="btn btn-primary px-10 border-2 border-cyan-400 bg-cyan-500 hover:bg-cyan-600 hover:text-white text-white dark:text-[#D9DFF2]"
-              onClick={(e) => {
-                e.preventDefault();
-                saveProfile();
-              }}
-            >
-              Save Profile
-            </button>
-            <button className="btn px-10 border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white">
-              Delete Profile
-            </button>
-          </div>
-
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-        </form>
-
-        {/* Preview */}
-        <PreviewCard
-          user={{
-            firstName,
-            lastName,
-            photoURL,
-            title,
-            about,
-            gender,
-            age,
-            city,
-            country,
-            skills,
-          }}
-        />
-      </div>
-    </>
+      {/* Live Preview */}
+      <PreviewCard
+        user={{
+          firstName,
+          lastName,
+          photoURL,
+          title,
+          about,
+          gender,
+          age,
+          city,
+          country,
+          skills,
+        }}
+      />
+    </div>
   );
 };
 

@@ -26,7 +26,7 @@ const Feed = () => {
     getFeed();
   }, []);
 
-  if (!feed) return <div className="text-cyan-300 flex justify-center text-2xl font-bold">Loading feed...</div>;
+  if (!feed) return <div className="text-cyan-600 dark:text-cyan-300 flex justify-center text-2xl font-bold">Loading feed...</div>;
 
   if (feed.length <= 0) {
     return (
