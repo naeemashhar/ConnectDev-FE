@@ -9,14 +9,26 @@ import darkBackground from "/bg-login.png";
 
 const UserCard = ({ user }) => {
   const [hoverAction, setHoverAction] = useState(null);
-
   const dispatch = useDispatch();
 
   const [isLightMode, setIsLightMode] = useState(true);
 
+  // Listen to data-theme attribute changes on <html>
   useEffect(() => {
-    const theme = localStorage.getItem("theme") || "light";
-    setIsLightMode(theme === "light");
+    const updateTheme = () => {
+      const theme = document.documentElement.getAttribute("data-theme") || "light";
+      setIsLightMode(theme === "light");
+    };
+
+    updateTheme(); // Initial call
+
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   const backgroundStyle = {
