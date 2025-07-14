@@ -106,12 +106,12 @@ const SignUp = () => {
   return (
     <section className="min-h-screen bg-gradient-to-br from-[#dfe0e3] via-[#ffffff] to-[#c9ccd0] dark:from-[#020013] dark:via-gray-900/5 dark:to-[#020013] px-4 py-12 flex justify-center">
       <button
-        onClick={() => navigate(-1)}
-        className="cursor-pointer absolute top-4 left-4 px-4 py-2 text-md text-gray-900 dark:text-white rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back
-      </button>
+          onClick={() => navigate(-1)}
+          className="cursor-pointer fixed top-6 left-6 z-20 px-4 py-2 text-md text-[#021431] dark:text-white rounded hover:bg-black/5 dark:hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </button>
       <form
         onSubmit={handleSubmit}
         className="max-w-2xl w-full rounded-lg shadow-lg p-8 space-y-6 bg-[#E3E9F4] dark:bg-base-200 text-gray-900 dark:text-white"

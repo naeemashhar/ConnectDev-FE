@@ -13,12 +13,12 @@ text-base-content px-4 py-16
     >
       {/* Back Button */}
       <button
-        onClick={() => navigate(-1)}
-        className="cursor-pointer fixed top-4 left-4 z-50 px-4 py-2 text-sm md:text-md dark:text-white text-black rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back
-      </button>
+          onClick={() => navigate(-1)}
+          className="cursor-pointer fixed top-6 left-6 z-20 px-4 py-2 text-md text-[#021431] dark:text-white rounded hover:bg-black/5 dark:hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </button>
 
       <div className="max-w-5xl mx-auto text-center mt-12 md:mt-24 px-2">
         {/* Logo + Heading */}

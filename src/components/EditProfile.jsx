@@ -97,16 +97,22 @@ const EditProfile = ({ user }) => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-[#020013] via-cyan-900/2 to-[#020013] px-4 py-10 flex flex-col lg:flex-row items-start justify-center gap-10 relative">
+      <div
+        className="min-h-screen px-4 py-10 flex flex-col lg:flex-row items-start justify-center gap-10 relative
+  bg-gradient-to-br 
+  from-[#F2F7FE] via-[#E3E9F4] to-[#F2F7FE] 
+  dark:from-[#020013] dark:via-cyan-900/2 dark:to-[#020013]
+"
+      >
         <button
           onClick={() => navigate(-1)}
-          className="cursor-pointer px-4 py-2 text-md text-white rounded hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2 lg:absolute lg:top-6 lg:left-6"
+          className="cursor-pointer fixed top-6 left-6 z-20 px-4 py-2 text-md text-[#021431] dark:text-white rounded hover:bg-black/5 dark:hover:bg-white/10 transition hover:text-cyan-500 flex items-center gap-2"
         >
           <ArrowLeft className="w-4 h-4" />
           Back
         </button>
 
-        <form className="w-full max-w-2xl bg-transparent backdrop-blur-md p-8 rounded-3xl border border-white/10 shadow-lg space-y-6 text-white mt-12 lg:mt-0">
+        <form className="w-full max-w-2xl bg-white/40 dark:bg-transparent backdrop-blur-md p-8 rounded-3xl border border-[#C9D6F2] dark:border-white/10 shadow-lg space-y-6 text-[#021431] dark:text-white mt-12 lg:mt-0">
           <h2 className="text-2xl font-semibold text-center">
             Edit Your Profile
           </h2>
@@ -119,7 +125,7 @@ const EditProfile = ({ user }) => {
               onChange={(e) => setFirstName(e.target.value)}
               value={firstName}
               placeholder="First Name"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
               required
             />
             <input
@@ -128,25 +134,27 @@ const EditProfile = ({ user }) => {
               onChange={(e) => setLastName(e.target.value)}
               value={lastName}
               placeholder="Last Name"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
               required
             />
           </div>
 
           {/* Title Selection */}
           <div>
-            <p className="mb-1 text-white/70">Select Your Title</p>
+            <p className="mb-1 text-gray-600 dark:text-white/70">
+              Select Your Title
+            </p>
             <div className="flex flex-wrap gap-2">
               {titleOptions.map((role) => (
                 <button
                   key={role}
                   type="button"
                   onClick={() => setTitle(role)}
-                  className={`px-3 py-1 rounded-full border ${
+                  className={`px-3 py-1 rounded-full border transition font-medium ${
                     title === role
-                      ? "bg-cyan-500 text-[#23282b] border-cyan-500"
-                      : "text-[#D9DFF2] border-white/20"
-                  } hover:bg-cyan-600 transition`}
+                      ? "bg-cyan-500 text-white border-cyan-500"
+                      : "text-[#23282b] dark:text-[#D9DFF2] border-gray-300 dark:border-white/20"
+                  } hover:bg-cyan-600 hover:text-white`}
                 >
                   {role}
                 </button>
@@ -161,7 +169,7 @@ const EditProfile = ({ user }) => {
             value={about}
             placeholder="Tell us about yourself..."
             rows={4}
-            className="textarea textarea-bordered w-full"
+            className="textarea textarea-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
           />
 
           {/* Age & Gender */}
@@ -175,7 +183,7 @@ const EditProfile = ({ user }) => {
                 if (value >= 0 && value <= 100) setAge(value);
               }}
               value={age}
-              className="input input-bordered w-full"
+              className="input input-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
               required
               min={14}
               max={100}
@@ -184,7 +192,7 @@ const EditProfile = ({ user }) => {
               name="gender"
               onChange={(e) => setGender(e.target.value)}
               value={gender}
-              className="select select-bordered w-full"
+              className="select select-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
               required
             >
               <option value="" disabled>
@@ -203,12 +211,14 @@ const EditProfile = ({ user }) => {
             onChange={(e) => setPhotoURL(e.target.value)}
             value={photoURL}
             placeholder="Photo URL"
-            className="input input-bordered w-full"
+            className="input input-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
           />
 
           {/* Skills */}
           <div>
-            <p className="mb-1 text-white/70">Select Skills</p>
+            <p className="mb-1 text-gray-600 dark:text-white/70">
+              Select Skills
+            </p>
             <div className="flex flex-wrap gap-2">
               {skillOptions.map(({ name, logo }) => {
                 const selected = skills.includes(name);
@@ -217,11 +227,11 @@ const EditProfile = ({ user }) => {
                     key={name}
                     type="button"
                     onClick={() => toggleSkill(name)}
-                    className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm border font-mono ${
+                    className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm border font-mono transition ${
                       selected
-                        ? "bg-cyan-400 text-[#23282b] border-cyan-400 font-semibold"
-                        : "text-[#D9DFF2] border-white/20"
-                    } hover:bg-cyan-600 transition`}
+                        ? "bg-cyan-400 text-white border-cyan-400 font-semibold"
+                        : "text-[#23282b] dark:text-[#D9DFF2] border-gray-300 dark:border-white/20"
+                    } hover:bg-cyan-600 hover:text-white`}
                   >
                     <img src={logo} alt={name} className="w-5 h-5 rounded" />
                     &lt;{name}&gt;
@@ -239,7 +249,7 @@ const EditProfile = ({ user }) => {
               placeholder="City"
               onChange={(e) => setCity(e.target.value)}
               value={city}
-              className="input input-bordered w-full"
+              className="input input-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
             />
             <input
               type="text"
@@ -247,14 +257,14 @@ const EditProfile = ({ user }) => {
               onChange={(e) => setCountry(e.target.value)}
               value={country}
               placeholder="Country"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full bg-white text-[#021431] dark:bg-transparent dark:text-white"
             />
           </div>
 
           {/* Buttons */}
           <div className="text-center flex flex-col md:flex-row justify-center items-center gap-4">
             <button
-              className="btn btn-primary px-10 border-2 border-cyan-400 hover:text-[#D9DFF2]"
+              className="btn btn-primary px-10 border-2 border-cyan-400 bg-cyan-500 hover:bg-cyan-600 hover:text-white text-white dark:text-[#D9DFF2]"
               onClick={(e) => {
                 e.preventDefault();
                 saveProfile();
@@ -262,13 +272,12 @@ const EditProfile = ({ user }) => {
             >
               Save Profile
             </button>
-            <button className="btn btn-primary px-10 border-2 border-red-600 hover:bg-red-600">
+            <button className="btn px-10 border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white">
               Delete Profile
             </button>
           </div>
 
-          {/* Error Message */}
-          {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
         </form>
 
         {/* Preview */}
